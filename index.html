@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        .login-container {
+            width: 300px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <input type="text" id="key" placeholder="Enter your key">
+        <button onclick="login()">Login</button>
+        <p class="error" id="error-message"></p>
+    </div>
+
+    <script>
+        const allowedKeys = ["KEY-12345"]; // Example of allowed keys (must be dynamically fetched in real implementation)
+        const deviceID = localStorage.getItem('deviceID') || Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('deviceID', deviceID); // Store device ID
+
+        function login() {
+            const key = document.getElementById('key').value;
+            const storedDeviceID = localStorage.getItem('keyDeviceID');
+            if (allowedKeys.includes(key) && (!storedDeviceID || storedDeviceID === deviceID)) {
+                localStorage.setItem('keyDeviceID', deviceID);
+                window.location.href = "home.html"; // Redirect to home page
+            } else {
+                document.getElementById('error-message').innerText = "Login failed. Redirecting...";
+                setTimeout(() => {
+                    window.location.href = "https://t.me/notimepass4"; // Redirect to Telegram
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
